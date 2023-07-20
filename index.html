@@ -9,70 +9,6 @@
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
-    <style>
-        .direction-buttons {
-            display: none; /* hide by default */
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            justify-content: space-between;
-            align-items: center;
-            width: 200px;
-            height: 200px;
-            background: transparent;
-        }
-
-        .direction-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: rgba(44, 62, 80, 0.5); /* Added transparency */
-            color: #fff;
-            font-size: 1.5rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s;
-        }
-
-        .direction-button:active {
-            background-color: rgba(231, 76, 60, 0.5); /* Added transparency */
-        }
-
-        .up-button {
-            position: absolute;
-            top: 0;
-            left: 70px;
-        }
-
-        .down-button {
-            position: absolute;
-            bottom: 0;
-            left: 70px;
-        }
-
-        .left-button {
-            position: absolute;
-            left: 0;
-            top: 70px;
-        }
-
-        .right-button {
-            position: absolute;
-            right: 0;
-            top: 70px;
-        }
-
-        /* This media query applies to screens smaller than 768px */
-        @media (max-width: 767px) {
-            .direction-buttons {
-                display: flex; /* show on small screens */
-            }
-        }
-    </style>
-
     <title>Joguinho da Cobrinha</title>
 </head>
 <body>
@@ -95,10 +31,10 @@
     </div>
 
     <div class="direction-buttons">
-        <div class="direction-button up-button">🡅</div>
-        <div class="direction-button left-button">🡄</div>
-        <div class="direction-button down-button">🡇</div>
-        <div class="direction-button right-button">🡆</div>
+        <div class="direction-button up-button"></div>
+        <div class="direction-button left-button"></div>
+        <div class="direction-button down-button"></div>
+        <div class="direction-button right-button"></div>
     </div>
 
     <canvas width="600" height="600"></canvas>

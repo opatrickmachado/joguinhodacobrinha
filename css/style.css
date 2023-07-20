@@ -123,3 +123,80 @@ canvas {
     gap: 5px;
     cursor: pointer;
 }
+
+.direction-buttons {
+    display: none; /* hide by default */
+    position: fixed; /* changed from relative */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center; /* changed from space-between */
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background: transparent;
+    flex-direction: column; /* Add this */
+}
+
+@media (max-width: 767px) {
+    .direction-buttons {
+        display: flex; /* show on small screens */
+    }
+}
+
+.up-button,
+.down-button,
+.left-button,
+.right-button {
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid white;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.up-button {
+    margin: 0 auto; 
+    position: absolute;
+    top: 0;
+    left: 75px;
+    order: 1;
+    background-image: url("/img/Cima.png"); 
+}
+
+.down-button {
+    margin: 0 auto; 
+    position: absolute;
+    bottom: 0;
+    left: 75px;
+    order: 1;
+    background-image: url("/img/SetaBaixo.png");
+}
+
+.left-button {
+    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    top: 70px;
+    order: 2;
+    background-image: url("/img/SetaEsquerda.png"); 
+}
+
+.right-button {
+    margin: 0 auto; 
+    position: absolute;
+    right: 0;
+    top: 70px;
+    order: 2;
+    background-image: url("/img/SetaDireita.png"); 
+}
+
+
+/* This media query applies to screens smaller than 768px */
+@media (max-width: 767px) {
+    .direction-buttons {
+        display: flex; /* show on small screens */
+    }
+}
