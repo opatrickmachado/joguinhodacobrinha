@@ -267,23 +267,20 @@ const gameLoop = () => {
 
 gameLoop()
 
-document.addEventListener("keydown", ({ key }) => {
-    if (key == "ArrowRight" && direction != "left") {
-        direction = "right"
-    }
+document.addEventListener("keydown", (event) => {
+    const { key } = event;
 
-    if (key == "ArrowLeft" && direction != "right") {
-        direction = "left"
+    if (key === "ArrowRight" && direction !== "left") {
+        direction = "right";
+    } else if (key === "ArrowLeft" && direction !== "right") {
+        direction = "left";
+    } else if (key === "ArrowUp" && direction !== "down") {
+        direction = "up";
+    } else if (key === "ArrowDown" && direction !== "up") {
+        direction = "down";
     }
+});
 
-    if (key == "ArrowDown" && direction != "up") {
-        direction = "down"
-    }
-
-    if (key == "ArrowUp" && direction != "down") {
-        direction = "up"
-    }
-})
 
 buttonPlay.addEventListener("click", () => {
     const ranking = Number(localStorage.getItem('ranking') || "0")
@@ -314,3 +311,66 @@ window.onload = () => {
     livesElement.innerHTML = "&nbsp;03";
     rankingElement.innerHTML = "&nbsp;" + highScore.toString().padStart(2, '0');
 };
+
+// Inicializa uma nova conexão WebSocket.
+let socket = new WebSocket("ws://localhost:8080");
+
+// Defina as funções de tratamento de eventos do WebSocket.
+socket.onopen = function(e) {
+  console.log("[open] Conexão estabelecida");
+};
+
+socket.onmessage = function(event) {
+  console.log(`[message] Dados recebidos do servidor: ${event.data}`);
+  switch(event.data) {
+    case 'UP':
+      // Adicione aqui o código para mover a cobrinha para cima
+      break;
+    case 'DOWN':
+      // Adicione aqui o código para mover a cobrinha para baixo
+      break;
+    case 'LEFT':
+      // Adicione aqui o código para mover a cobrinha para esquerda
+      break;
+    case 'RIGHT':
+      // Adicione aqui o código para mover a cobrinha para direita
+      break;
+  }
+};
+
+socket.onclose = function(event) {
+  console.log(`[close] Conexão fechada (código ${event.code}), motivo: ${event.reason}`);
+};
+
+socket.onerror = function(error) {
+  console.log(`[error] ${error.message}`);
+};
+
+document.querySelector(".up-button").addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    if (direction !== "down") {
+        direction = "up";
+    }
+});
+
+document.querySelector(".down-button").addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    if (direction !== "up") {
+        direction = "down";
+    }
+});
+
+document.querySelector(".left-button").addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    if (direction !== "right") {
+        direction = "left";
+    }
+});
+
+document.querySelector(".right-button").addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    if (direction !== "left") {
+        direction = "right";
+    }
+});
+
