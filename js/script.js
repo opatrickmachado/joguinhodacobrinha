@@ -65,7 +65,8 @@ const randomColor = () => {
 const food = {
     x: randomPosition(),
     y: randomPosition(),
-    color: randomColor()
+    color: randomColor(),
+    digesting: 0
 }
 
 let direction, loopId
@@ -79,22 +80,42 @@ const drawFood = () => {
     ctx.shadowColor = color
     ctx.shadowBlur = 6
     ctx.fillStyle = color
-    ctx.fillRect(x, y, size, size)
+
+    // Alteramos essa linha para desenhar um círculo em vez de um quadrado
+    ctx.beginPath();
+    ctx.arc(x + size / 2, y + size / 2, size / 2, 0, 2 * Math.PI);
+    ctx.fill();
     ctx.shadowBlur = 0
 }
 
+const isNearFood = () => {
+    const head = snake[snake.length - 1];
+    const xDiff = Math.abs(head.x - food.x);
+    const yDiff = Math.abs(head.y - food.y);
+
+    return (xDiff <= size && yDiff <= size);
+};
+
 const drawSnake = () => {
     const colorScheme = getPreferredColorScheme();
-    ctx.fillStyle = colorScheme === 'light' ? '#222' : '#ddd';
 
     snake.forEach((position, index) => {
-        if (index == snake.length - 1) {
-            ctx.fillStyle = colorScheme === 'light' ? '#000' : 'white';
-        }
+        const isHead = (index == snake.length - 1);
+        const nearFood = isHead && isNearFood(); // alterado para nearFood
 
-        ctx.fillRect(position.x, position.y, size, size)
-    })
-}
+        const isDigesting = (index >= snake.length - 1 - level) && justAte;
+        const radius = nearFood || isDigesting ? size * 1.5 / 2 : size / 2; // alterado para nearFood
+
+        ctx.fillStyle = isHead ? (colorScheme === 'light' ? '#000' : 'white') : (colorScheme === 'light' ? '#222' : '#ddd');
+        ctx.beginPath();
+        ctx.arc(position.x + size / 2, position.y + size / 2, radius, 0, 2 * Math.PI);
+        ctx.fill();
+    });
+
+    if (justAte) {
+        justAte = false;
+    }
+};
 
 const moveSnake = () => {
     if (!direction) return
@@ -141,27 +162,31 @@ const drawGrid = () => {
     }
 }
 
-const chackEat = () => {
-    const head = snake[snake.length - 1]
+let justAte = false;
+
+const checkEat = () => {
+    const head = snake[snake.length - 1];
 
     if (head.x == food.x && head.y == food.y) {
-        incrementScore()
-        snake.push(head)
-        audio.play()
+        incrementScore();
+        snake.push(head);
+        audio.play();
 
-        let x = randomPosition()
-        let y = randomPosition()
+        let x = randomPosition();
+        let y = randomPosition();
 
         while (snake.find((position) => position.x == x && position.y == y)) {
-            x = randomPosition()
-            y = randomPosition()
+            x = randomPosition();
+            y = randomPosition();
         }
 
-        food.x = x
-        food.y = y
-        food.color = randomColor()
+        food.x = x;
+        food.y = y;
+        food.color = randomColor();
+
+        justAte = true; // A cobra acabou de comer
     }
-}
+};
 
 const checkCollision = () => {
     const head = snake[snake.length - 1]
@@ -208,11 +233,11 @@ const gameOver = () => {
 
 // When the game starts, load and display the top score from the ranking
 buttonPlay.addEventListener("click", () => {
-    const ranking = JSON.parse(localStorage.getItem('ranking') || '[]')
+    const ranking = Number(localStorage.getItem('ranking') || "0")
     scoreElement.innerHTML = "&nbsp;00"
     levelElement.innerHTML = "&nbsp;01"
     livesElement.innerHTML = "&nbsp;03"
-    rankingElement.innerHTML = "&nbsp;" + ranking[0].toString().padStart(2, '0') || "00"
+    rankingElement.innerHTML = "&nbsp;" + ranking.toString().padStart(2, '0')
     menu.style.display = "none"
     canvas.style.filter = "none"
 
@@ -232,7 +257,7 @@ const gameLoop = () => {
     drawFood()
     moveSnake()
     drawSnake()
-    chackEat()
+    checkEat() // corrigido de chackEat para checkEat
     checkCollision()
 
     loopId = setTimeout(() => {
