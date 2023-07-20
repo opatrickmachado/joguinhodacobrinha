@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #191919;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #ffffff;
+        color: #000000;
+    }
+
+    canvas {
+        background-color: #ffffff; /* Background do canvas no modo claro */
+    }
+
+    #snake-dot {
+        background-color: #000000; /* Cor da cobra no modo claro */
+    }
+
+    #food-dot {
+        background-color: #e74c3c; /* Cor da comida no modo claro */
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #191919;
+        color: #ffffff;
+    }
+
+    canvas {
+        background-color: #111; /* Background do canvas no modo escuro */
+    }
+
+    #snake-dot {
+        background-color: #ffffff; /* Cor da cobra no modo escuro */
+    }
+
+    #food-dot {
+        background-color: #3498db; /* Cor da comida no modo escuro */
+    }
+}
+
+canvas {
+    background-color: #111;
+}
+
+.score, .level, .lives, .ranking {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    margin: 5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-family: "Orbitron", sans-serif;
+}
+
+.score::after, .level::after, .lives::after, .ranking::after {
+    content: "\00a0\00a0";  /* Isso adiciona dois espaços após o ":" */
+}
+
+.score {
+    color: #2ecc71; /* verde */
+}
+
+.level {
+    color: #3498db; /* azul */
+}
+
+.lives {
+    color: #e74c3c; /* vermelho */
+}
+
+.ranking {
+    color: #f1c40f; /* amarelo */
+}
+
+.menu-screen {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.game-over {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.final-score {
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.btn-play {
+    border: none;
+    border-radius: 100px;
+    padding: 10px 15px 10px 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+}
