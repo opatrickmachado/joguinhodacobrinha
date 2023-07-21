@@ -10,7 +10,9 @@ const updateBackgroundColor = () => {
     canvas.style.backgroundColor = colorScheme === 'light' ? '#ddd' : '#191919';
 }
 
-const canvas = document.querySelector("canvas")
+const canvas = document.querySelector('canvas');
+canvas.width = 600;  // Use o tamanho desejado aqui
+canvas.height = 600;  // Use o tamanho desejado aqui
 const ctx = canvas.getContext("2d")
 
 const scoreElement = document.querySelector(".score--value")
@@ -373,4 +375,3 @@ document.querySelector(".right-button").addEventListener("touchstart", (event) =
         direction = "right";
     }
 });
-
